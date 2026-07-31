@@ -25,28 +25,28 @@ import com.generation.academia_fithub.repository.ExercicioRepository;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/exercicios") 
+@RequestMapping("/exercicios")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class ExercicioController {
 	
 
-	@Autowired 
+	@Autowired
     private ExercicioRepository exercicioRepository;
     
-    @Autowired 
+    @Autowired
     private CategoriaRepository categoriaRepository;
 
-    @GetMapping 
+    @GetMapping
     public ResponseEntity<List<Exercicio>> getAll() {
         return ResponseEntity.ok(exercicioRepository.findAll());
         
 	}
     
-    @GetMapping("/{id}") 
+    @GetMapping("/{id}")
     public ResponseEntity<Exercicio> getById(@PathVariable Long id) {
 		return exercicioRepository.findById(id)
-				.map(resposta -> ResponseEntity.ok(resposta)) 
-				.orElse(ResponseEntity.notFound().build()); 
+				.map(resposta -> ResponseEntity.ok(resposta))
+				.orElse(ResponseEntity.notFound().build());
 		
 	}
     
@@ -71,7 +71,7 @@ public class ExercicioController {
     throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "A categoria não existe!", null);
 }
     
-    @PutMapping 
+    @PutMapping
     public ResponseEntity<Exercicio> put(@Valid @RequestBody Exercicio exercicio) {
         
         if (exercicioRepository.existsById(exercicio.getId())) {
@@ -86,12 +86,12 @@ public class ExercicioController {
         return ResponseEntity.notFound().build();
     }
 
-    @ResponseStatus(HttpStatus.NO_CONTENT) 
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
-    	Optional<Exercicio> exercicio = exercicioRepository.findById(id); 
-    	if(exercicio.isEmpty()) 
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND); 
-    	exercicioRepository.deleteById(id); 
+    	Optional<Exercicio> exercicio = exercicioRepository.findById(id);
+    	if(exercicio.isEmpty())
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+    	exercicioRepository.deleteById(id);
     }
 }

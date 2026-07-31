@@ -13,7 +13,7 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
-@Entity 
+@Entity
 @Table(name = "tb_exercicios")
 @JsonPropertyOrder({ "id", "nome", "equipamento", "foto", "categoria" })
 public class Exercicio {

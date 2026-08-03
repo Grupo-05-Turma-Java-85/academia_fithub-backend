@@ -2,6 +2,7 @@ package com.generation.academia_fithub.model;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -28,6 +29,7 @@ public class Usuario {
 	@Column(length = 255)
 	private String nome;
 
+	@Schema(example = "email@email.com.br")
 	@NotBlank(message = "O atributo usuário é obrigatório!")
 	@Email(message = "O atributo usuário deve ser um email válido!")
 	@Column(length = 255)

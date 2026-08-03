@@ -24,7 +24,7 @@ Além do gerenciamento de exercícios, a aplicação conta com um módulo de usu
 
 O projeto foi desenvolvido utilizando **Java**, **Spring Boot**, **Spring Data JPA**, **Hibernate** e **MySQL**, seguindo a arquitetura **REST** e as boas práticas de desenvolvimento Back-end, garantindo uma aplicação organizada, escalável e de fácil manutenção.
 
-🌐 **Link do Deploy:** 
+🌐 **Link do Deploy:** https://academia-fithub-backend.onrender.com
 
 
 

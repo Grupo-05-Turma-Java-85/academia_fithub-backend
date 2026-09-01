@@ -8,6 +8,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
@@ -15,7 +16,7 @@ import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "tb_exercicios")
-@JsonPropertyOrder({ "id", "nome", "equipamento", "foto", "categoria" })
+@JsonPropertyOrder({ "id", "nome", "equipamento", "foto", "execucaoTecnica", "categoria" })
 public class Exercicio {
 
 	@Id // PRIMARY KEY
@@ -26,7 +27,7 @@ public class Exercicio {
 	@Size(min = 5, max = 255, message = "O atributo nome deve ter no mínimo 5 e no máximo 255 caracteres.")
 	@Column(length = 255)
 	private String nome;
-		
+
 	@NotBlank(message = "O atributo equipamento é obrigatório!")
 	@Size(min = 5, max = 255, message = "O atributo equipamento deve ter no mínimo 5 e no máximo 255 caracteres.")
 	@Column(length = 255)
@@ -35,6 +36,11 @@ public class Exercicio {
 	@Size(max = 5000, message = "O link da foto não pode ser maior do que 5000 caracteres")
 	@Column(length = 5000)
 	private String foto;
+
+	//PASSO A PASSO DE EXECUÇÃO (texto longo, por isso @Lob)
+	@Lob
+	@Column(columnDefinition = "TEXT")
+	private String execucaoTecnica;
 	
 	@ManyToOne
 	@JsonIgnoreProperties("exercicio")
@@ -70,6 +76,14 @@ public class Exercicio {
 
 	public void setFoto(String foto) {
 		this.foto = foto;
+	}
+
+	public String getExecucaoTecnica() {
+		return execucaoTecnica;
+	}
+
+	public void setExecucaoTecnica(String execucaoTecnica) {
+		this.execucaoTecnica = execucaoTecnica;
 	}
 
 	public Categoria getCategoria() {

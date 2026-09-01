@@ -1,7 +1,9 @@
 package com.generation.academia_fithub.model;
 
+import java.time.LocalDate;
+
 public class UsuarioLogin {//DATA TRANSFER OBJECT
-	
+
 	private Long id;
 	private String nome;
 	private String usuario;
@@ -9,8 +11,12 @@ public class UsuarioLogin {//DATA TRANSFER OBJECT
 	private String foto;
 	private Double peso;
 	private Double altura;
+	private LocalDate dataNascimento;
+	private String objetivo;
+	private String nivel;
+	private Integer frequenciaSemanal;
 	private String token;
-	
+
 	//GETTERS AND SETTERS
 	public Long getId() {
 		return id;
@@ -60,12 +66,40 @@ public class UsuarioLogin {//DATA TRANSFER OBJECT
 	public void setAltura(Double altura) {
 		this.altura = altura;
 	}
-	
+
+	public LocalDate getDataNascimento() {
+		return dataNascimento;
+	}
+	public void setDataNascimento(LocalDate dataNascimento) {
+		this.dataNascimento = dataNascimento;
+	}
+
+	public String getObjetivo() {
+		return objetivo;
+	}
+	public void setObjetivo(String objetivo) {
+		this.objetivo = objetivo;
+	}
+
+	public String getNivel() {
+		return nivel;
+	}
+	public void setNivel(String nivel) {
+		this.nivel = nivel;
+	}
+
+	public Integer getFrequenciaSemanal() {
+		return frequenciaSemanal;
+	}
+	public void setFrequenciaSemanal(Integer frequenciaSemanal) {
+		this.frequenciaSemanal = frequenciaSemanal;
+	}
+
 	public String getToken() {
 		return token;
 	}
 	public void setToken(String token) {
 		this.token = token;
 	}
-	
+
 }

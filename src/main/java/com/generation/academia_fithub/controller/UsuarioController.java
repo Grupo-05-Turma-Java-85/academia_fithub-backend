@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.generation.academia_fithub.model.Exercicio;
 import com.generation.academia_fithub.model.Usuario;
 import com.generation.academia_fithub.model.UsuarioLogin;
 import com.generation.academia_fithub.service.UsuarioService;
@@ -68,6 +66,7 @@ public class UsuarioController {//CUIDA DA INTERAÇÃO COM O USUÁRIO
 	
 	
 	//MÉTODO POST - CADASTRAR
+	//continua com @Valid: no cadastro, nome/email/senha/peso/altura são obrigatórios
 	@PostMapping("/cadastrar")
 	public ResponseEntity<Usuario> post(@Valid @RequestBody Usuario usuario){
 		return usuarioService.cadastrarUsuario(usuario)
@@ -77,8 +76,10 @@ public class UsuarioController {//CUIDA DA INTERAÇÃO COM O USUÁRIO
 		
 		
 	//MÉTODO PUT - ATUALIZAR
+	//SEM @Valid: permite atualização parcial (ex: só objetivo/nível/idade),
+	//a mesclagem com os dados existentes é feita no UsuarioService
 	@PutMapping("/atualizar")
-	public ResponseEntity<Usuario> put(@Valid @RequestBody Usuario usuario){
+	public ResponseEntity<Usuario> put(@RequestBody Usuario usuario){
 		return usuarioService.atualizarUsuario(usuario)
 				.map(resposta -> ResponseEntity.status(HttpStatus.OK).body(resposta))
 				.orElse(ResponseEntity.notFound().build());

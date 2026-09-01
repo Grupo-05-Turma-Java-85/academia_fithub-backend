@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class AcademiaFithubApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(AcademiaFithubApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(AcademiaFithubApplication.class, args);
+    }
 
 }

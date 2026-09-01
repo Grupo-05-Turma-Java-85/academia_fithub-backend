@@ -2,18 +2,13 @@ package com.generation.academia_fithub.service;
 
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.server.ResponseStatusException;
-
 import com.generation.academia_fithub.model.Usuario;
 import com.generation.academia_fithub.model.UsuarioLogin;
 import com.generation.academia_fithub.repository.UsuarioRepository;
@@ -72,23 +67,40 @@ public class UsuarioService {//REGRAS DE NEGÓCIO
 	}	
 		
 	
-	//MÉTODO ATUALIZAR
+	//MÉTODO ATUALIZAR (ATUALIZAÇÃO PARCIAL - SÓ SOBRESCREVE O QUE VIER PREENCHIDO)
 	public Optional<Usuario> atualizarUsuario(Usuario usuario){
 		
-				
-		//VERIFICA SE NÃO TEM USUÁRIO
-		if(usuarioRepository.findById(usuario.getId()).isEmpty()) {
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Usuário não existe.");
+		if (usuario.getId() == null) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "O id é obrigatório para atualizar.");
 		}
 		
-		Optional<Usuario> usuarioExistente = usuarioRepository.findByUsuario(usuario.getUsuario());
+		//BUSCA O USUÁRIO COMO ESTÁ HOJE NO BANCO
+		Usuario usuarioExistente = usuarioRepository.findById(usuario.getId())
+				.orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Usuário não existe."));
 		
-		if(usuarioExistente.isPresent() && !usuarioExistente.get().getId().equals(usuario.getId()))
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "O e-mail já está em uso!", null);
-			
-		usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
+		//SE MANDOU TROCAR O E-MAIL, CONFERE SE NÃO ESTÁ EM USO POR OUTRO USUÁRIO
+		if (usuario.getUsuario() != null) {
+			Optional<Usuario> usuarioComMesmoEmail = usuarioRepository.findByUsuario(usuario.getUsuario());
+			if (usuarioComMesmoEmail.isPresent() && !usuarioComMesmoEmail.get().getId().equals(usuario.getId()))
+				throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "O e-mail já está em uso!", null);
+		}
 		
-		return Optional.ofNullable(usuarioRepository.save(usuario));
+		//MESCLA: SÓ SOBRESCREVE OS CAMPOS QUE VIERAM PREENCHIDOS, MANTÉM O RESTO COMO ESTAVA
+		if (usuario.getNome() != null) usuarioExistente.setNome(usuario.getNome());
+		if (usuario.getUsuario() != null) usuarioExistente.setUsuario(usuario.getUsuario());
+		if (usuario.getSenha() != null && !usuario.getSenha().isBlank()) {
+			usuarioExistente.setSenha(passwordEncoder.encode(usuario.getSenha()));
+		}
+		if (usuario.getFoto() != null) usuarioExistente.setFoto(usuario.getFoto());
+		if (usuario.getPeso() != null) usuarioExistente.setPeso(usuario.getPeso());
+		if (usuario.getAltura() != null) usuarioExistente.setAltura(usuario.getAltura());
+		if (usuario.getDataNascimento() != null) usuarioExistente.setDataNascimento(usuario.getDataNascimento());
+		if (usuario.getObjetivo() != null) usuarioExistente.setObjetivo(usuario.getObjetivo());
+		if (usuario.getNivel() != null) usuarioExistente.setNivel(usuario.getNivel());
+		if (usuario.getFrequenciaSemanal() != null) usuarioExistente.setFrequenciaSemanal(usuario.getFrequenciaSemanal());
+		if (usuario.getTreinoGerado() != null) usuarioExistente.setTreinoGerado(usuario.getTreinoGerado());
+		
+		return Optional.ofNullable(usuarioRepository.save(usuarioExistente));
 	}
 	
 	
@@ -119,6 +131,12 @@ public class UsuarioService {//REGRAS DE NEGÓCIO
 		usuarioLogin.setId(usuario.getId());
 		usuarioLogin.setNome(usuario.getNome());
 		usuarioLogin.setFoto(usuario.getFoto());
+		usuarioLogin.setPeso(usuario.getPeso());
+		usuarioLogin.setAltura(usuario.getAltura());
+		usuarioLogin.setDataNascimento(usuario.getDataNascimento());
+		usuarioLogin.setObjetivo(usuario.getObjetivo());
+		usuarioLogin.setNivel(usuario.getNivel());
+		usuarioLogin.setFrequenciaSemanal(usuario.getFrequenciaSemanal());
 		usuarioLogin.setSenha("");
 		usuarioLogin.setToken(gerarToken(usuario.getUsuario()));
 			

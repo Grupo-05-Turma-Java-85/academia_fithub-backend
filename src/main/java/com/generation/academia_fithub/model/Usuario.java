@@ -1,5 +1,8 @@
 package com.generation.academia_fithub.model;
 
+import java.time.LocalDate;
+import java.time.Period;
+
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -8,14 +11,16 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 
-@JsonPropertyOrder({ "id", "foto", "nome", "peso", "altura", "usuario", "senha"})
+@JsonPropertyOrder({ "id", "foto", "nome", "peso", "altura", "dataNascimento", "objetivo", "nivel", "frequenciaSemanal", "usuario", "senha", "treinoGerado" })
 
 @Entity
 @Table(name = "tb_usuarios")
@@ -53,8 +58,38 @@ public class Usuario {
 	@Positive(message= "O atributo altura deve ser maior que zero!")
 	@Column(nullable= false)
 	private Double altura;
-	
-	
+
+	//CAMPOS NOVOS - PERFIL DE TREINO
+	//São opcionais no cadastro (nullable) porque, seguindo o fluxo do design,
+	//só são preenchidos depois, na tela "Setup Your Workout" (via PUT /usuarios/atualizar)
+
+	@Schema(example = "2000-05-20")
+	@Past(message = "A data de nascimento deve estar no passado!")
+	@Column(nullable = true)
+	private LocalDate dataNascimento;
+
+	@Schema(example = "GANHO_DE_MASSA")
+	@Size(max = 50, message = "O atributo objetivo não pode ter mais que 50 caracteres")
+	@Column(length = 50, nullable = true)
+	private String objetivo; // GANHO_DE_MASSA | PERDA_DE_PESO | MANUTENCAO
+
+	@Schema(example = "INICIANTE")
+	@Size(max = 50, message = "O atributo nível não pode ter mais que 50 caracteres")
+	@Column(length = 50, nullable = true)
+	private String nivel; // INICIANTE | INTERMEDIARIO | AVANCADO
+
+	@Positive(message = "O atributo frequência semanal deve ser maior que zero!")
+	@Column(nullable = true)
+	private Integer frequenciaSemanal; // dias por semana (1 a 7)
+
+	//TREINO GERADO EM FORMATO JSON (STRING)
+	//@Lob evita a necessidade de criar uma entidade/tabela nova para armazenar
+	//a rotina montada (dias, exercícios escolhidos, séries e repetições sugeridas)
+	@Lob
+	@Column(columnDefinition = "TEXT", nullable = true)
+	private String treinoGerado;
+
+
 	//GETTERS AND SETTERS
 	public Long getId() {
 		return id;
@@ -104,11 +139,53 @@ public class Usuario {
 	public void setAltura(Double altura) {
 		this.altura = altura;
 	}
-	
+
+	public LocalDate getDataNascimento() {
+		return dataNascimento;
+	}
+	public void setDataNascimento(LocalDate dataNascimento) {
+		this.dataNascimento = dataNascimento;
+	}
+
+	public String getObjetivo() {
+		return objetivo;
+	}
+	public void setObjetivo(String objetivo) {
+		this.objetivo = objetivo;
+	}
+
+	public String getNivel() {
+		return nivel;
+	}
+	public void setNivel(String nivel) {
+		this.nivel = nivel;
+	}
+
+	public Integer getFrequenciaSemanal() {
+		return frequenciaSemanal;
+	}
+	public void setFrequenciaSemanal(Integer frequenciaSemanal) {
+		this.frequenciaSemanal = frequenciaSemanal;
+	}
+
+	public String getTreinoGerado() {
+		return treinoGerado;
+	}
+	public void setTreinoGerado(String treinoGerado) {
+		this.treinoGerado = treinoGerado;
+	}
+
 	//CALCULAR IMC
 	public Double calcularIMC() {
 		 return peso/(altura*altura);
 	}
+
+	//CALCULAR IDADE A PARTIR DA DATA DE NASCIMENTO
+	public Integer calcularIdade() {
+		if (dataNascimento == null) {
+			return null;
+		}
+		return Period.between(dataNascimento, LocalDate.now()).getYears();
+	}
 	
 }
-

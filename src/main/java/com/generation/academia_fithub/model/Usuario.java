@@ -14,13 +14,15 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 
-@JsonPropertyOrder({ "id", "foto", "nome", "peso", "altura", "dataNascimento", "nivel", "frequenciaSemanal", "usuario", "senha", "treinoGerado" })
+@JsonPropertyOrder({ "id", "foto", "nome", "peso", "altura", "dataNascimento", "nivel", "frequenciaSemanal", "usuario", "senha", "treinoGerado", "tipoUsuario" })
 
 @Entity
 @Table(name = "tb_usuarios")
@@ -84,6 +86,10 @@ public class Usuario {
 	@Column(columnDefinition = "TEXT", nullable = true)
 	private String treinoGerado;
 
+	@Min(value = 1, message = "O tipo de usuário deve ser 1 ou 2")
+	@Max(value = 2, message = "O tipo de usuário deve ser 1 ou 2")
+	@NotNull
+	private Integer tipoUsuario;
 
 	//GETTERS AND SETTERS
 	public Long getId() {
@@ -162,6 +168,13 @@ public class Usuario {
 	public void setTreinoGerado(String treinoGerado) {
 		this.treinoGerado = treinoGerado;
 	}
+	
+	public Integer getTipoUsuario() {
+	    return tipoUsuario;
+	}
+	public void setTipoUsuario(Integer tipoUsuario) {
+	    this.tipoUsuario = tipoUsuario;
+	}
 
 	//CALCULAR IMC
 	public Double calcularIMC() {
@@ -175,5 +188,6 @@ public class Usuario {
 		}
 		return Period.between(dataNascimento, LocalDate.now()).getYears();
 	}
+	
 	
 }

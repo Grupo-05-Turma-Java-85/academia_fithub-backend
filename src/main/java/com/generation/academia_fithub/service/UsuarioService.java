@@ -137,6 +137,7 @@ public class UsuarioService {//REGRAS DE NEGÓCIO
 		usuarioLogin.setFrequenciaSemanal(usuario.getFrequenciaSemanal());
 		usuarioLogin.setSenha("");
 		usuarioLogin.setToken(gerarToken(usuario.getUsuario()));
+		usuarioLogin.setTipoUsuario(usuario.getTipoUsuario());
 			
 		return usuarioLogin;
 	}

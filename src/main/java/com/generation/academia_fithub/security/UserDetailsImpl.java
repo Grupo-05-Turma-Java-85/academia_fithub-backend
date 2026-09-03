@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.Collections;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.generation.academia_fithub.model.Usuario;
@@ -15,9 +16,11 @@ public class UserDetailsImpl implements UserDetails {
 	//ATRIBUTOS PADRÕES
 	private String username;
 	private String password;
+	private Usuario user;
 
 	//MÉTODO CONSTRUTOR
 	public UserDetailsImpl(Usuario user) {
+		this.user = user;
 		this.username = user.getUsuario();
 		this.password = user.getSenha();
 	}
@@ -26,7 +29,15 @@ public class UserDetailsImpl implements UserDetails {
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 
-		return Collections.emptyList();  
+	    if (user.getTipoUsuario() == 2) {
+	        return Collections.singletonList(
+	            new SimpleGrantedAuthority("ROLE_ADMIN")
+	        );
+	    }
+
+	    return Collections.singletonList(
+	        new SimpleGrantedAuthority("ROLE_ALUNO")
+	    );
 	}
 
 	//RECUPERA USUÁRIO E SENHA

@@ -58,6 +58,27 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers(PUBLIC_ENDPOINTS).permitAll() 
                 .requestMatchers(HttpMethod.OPTIONS).permitAll() 
+                
+             // EXERCÍCIOS
+                .requestMatchers(HttpMethod.GET, "/exercicios/**")
+                    .hasAnyRole("ALUNO", "ADMIN")
+                .requestMatchers(HttpMethod.POST, "/exercicios/**")
+                    .hasRole("ADMIN")
+                .requestMatchers(HttpMethod.PUT, "/exercicios/**")
+                    .hasRole("ADMIN")
+                .requestMatchers(HttpMethod.DELETE, "/exercicios/**")
+                    .hasRole("ADMIN")
+
+                // CATEGORIAS
+                .requestMatchers(HttpMethod.GET, "/categorias/**")
+                    .hasAnyRole("ALUNO", "ADMIN")
+                .requestMatchers(HttpMethod.POST, "/categorias/**")
+                    .hasRole("ADMIN")
+                .requestMatchers(HttpMethod.PUT, "/categorias/**")
+                    .hasRole("ADMIN")
+                .requestMatchers(HttpMethod.DELETE, "/categorias/**")
+                    .hasRole("ADMIN")
+                
                 .anyRequest().authenticated() 
             )
             

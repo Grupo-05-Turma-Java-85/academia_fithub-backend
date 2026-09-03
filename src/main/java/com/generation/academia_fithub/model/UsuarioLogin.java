@@ -14,6 +14,7 @@ public class UsuarioLogin {//DATA TRANSFER OBJECT
 	private LocalDate dataNascimento;
 	private String nivel;
 	private Integer frequenciaSemanal;
+	private Integer tipoUsuario;
 	private String token;
 
 	//GETTERS AND SETTERS
@@ -86,6 +87,13 @@ public class UsuarioLogin {//DATA TRANSFER OBJECT
 	public void setFrequenciaSemanal(Integer frequenciaSemanal) {
 		this.frequenciaSemanal = frequenciaSemanal;
 	}
+	
+	public Integer getTipoUsuario() {
+        return tipoUsuario;
+    }
+    public void setTipoUsuario(Integer tipoUsuario) {
+        this.tipoUsuario = tipoUsuario;
+    }
 
 	public String getToken() {
 		return token;

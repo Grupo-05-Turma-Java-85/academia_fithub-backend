@@ -38,7 +38,7 @@ public class CategoriaController {
 	@Autowired
 	private CategoriaRepository categoriaRepository;
 
-	@Operation(summary = "Listar todas as categorias")
+	@Operation(summary = "Listar todas as categorias")	
 	@ApiResponses(value = {
 	    @ApiResponse(responseCode = "200", description = "Lista de categorias retornada com sucesso")})
 	@GetMapping
@@ -93,7 +93,7 @@ public class CategoriaController {
 	    @ApiResponse(responseCode = "204", description = "Categoria excluída com sucesso"),
 	    @ApiResponse(responseCode = "404", description = "Categoria não encontrada")
 	})
-	@ResponseStatus(HttpStatus.NOT_FOUND)
+	@ResponseStatus(HttpStatus.NO_CONTENT)
 	@DeleteMapping("/{id}")
 	public void delete(@PathVariable Long id) {
 		Optional<Categoria> categoria = categoriaRepository.findById(id);

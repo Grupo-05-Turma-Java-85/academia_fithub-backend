@@ -12,7 +12,6 @@ public class UsuarioLogin {//DATA TRANSFER OBJECT
 	private Double peso;
 	private Double altura;
 	private LocalDate dataNascimento;
-	private String objetivo;
 	private String nivel;
 	private Integer frequenciaSemanal;
 	private String token;
@@ -72,13 +71,6 @@ public class UsuarioLogin {//DATA TRANSFER OBJECT
 	}
 	public void setDataNascimento(LocalDate dataNascimento) {
 		this.dataNascimento = dataNascimento;
-	}
-
-	public String getObjetivo() {
-		return objetivo;
-	}
-	public void setObjetivo(String objetivo) {
-		this.objetivo = objetivo;
 	}
 
 	public String getNivel() {

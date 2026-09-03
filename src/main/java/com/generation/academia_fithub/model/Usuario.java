@@ -20,7 +20,7 @@ import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 
-@JsonPropertyOrder({ "id", "foto", "nome", "peso", "altura", "dataNascimento", "objetivo", "nivel", "frequenciaSemanal", "usuario", "senha", "treinoGerado" })
+@JsonPropertyOrder({ "id", "foto", "nome", "peso", "altura", "dataNascimento", "nivel", "frequenciaSemanal", "usuario", "senha", "treinoGerado" })
 
 @Entity
 @Table(name = "tb_usuarios")
@@ -67,11 +67,6 @@ public class Usuario {
 	@Past(message = "A data de nascimento deve estar no passado!")
 	@Column(nullable = true)
 	private LocalDate dataNascimento;
-
-	@Schema(example = "GANHO_DE_MASSA")
-	@Size(max = 50, message = "O atributo objetivo não pode ter mais que 50 caracteres")
-	@Column(length = 50, nullable = true)
-	private String objetivo; // GANHO_DE_MASSA | PERDA_DE_PESO | MANUTENCAO
 
 	@Schema(example = "INICIANTE")
 	@Size(max = 50, message = "O atributo nível não pode ter mais que 50 caracteres")
@@ -145,13 +140,6 @@ public class Usuario {
 	}
 	public void setDataNascimento(LocalDate dataNascimento) {
 		this.dataNascimento = dataNascimento;
-	}
-
-	public String getObjetivo() {
-		return objetivo;
-	}
-	public void setObjetivo(String objetivo) {
-		this.objetivo = objetivo;
 	}
 
 	public String getNivel() {

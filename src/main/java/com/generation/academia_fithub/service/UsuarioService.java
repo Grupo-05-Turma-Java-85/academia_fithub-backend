@@ -95,7 +95,6 @@ public class UsuarioService {//REGRAS DE NEGÓCIO
 		if (usuario.getPeso() != null) usuarioExistente.setPeso(usuario.getPeso());
 		if (usuario.getAltura() != null) usuarioExistente.setAltura(usuario.getAltura());
 		if (usuario.getDataNascimento() != null) usuarioExistente.setDataNascimento(usuario.getDataNascimento());
-		if (usuario.getObjetivo() != null) usuarioExistente.setObjetivo(usuario.getObjetivo());
 		if (usuario.getNivel() != null) usuarioExistente.setNivel(usuario.getNivel());
 		if (usuario.getFrequenciaSemanal() != null) usuarioExistente.setFrequenciaSemanal(usuario.getFrequenciaSemanal());
 		if (usuario.getTreinoGerado() != null) usuarioExistente.setTreinoGerado(usuario.getTreinoGerado());
@@ -134,7 +133,6 @@ public class UsuarioService {//REGRAS DE NEGÓCIO
 		usuarioLogin.setPeso(usuario.getPeso());
 		usuarioLogin.setAltura(usuario.getAltura());
 		usuarioLogin.setDataNascimento(usuario.getDataNascimento());
-		usuarioLogin.setObjetivo(usuario.getObjetivo());
 		usuarioLogin.setNivel(usuario.getNivel());
 		usuarioLogin.setFrequenciaSemanal(usuario.getFrequenciaSemanal());
 		usuarioLogin.setSenha("");

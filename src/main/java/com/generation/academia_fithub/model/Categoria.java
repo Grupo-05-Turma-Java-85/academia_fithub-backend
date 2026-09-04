@@ -2,7 +2,7 @@ package com.generation.academia_fithub.model;
 
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -35,7 +35,7 @@ public class Categoria {
 	private String descricao;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "categoria", cascade = CascadeType.REMOVE)
-	@JsonIgnoreProperties(value = "categoria", allowSetters = true)
+	@JsonIgnore
 	private List<Exercicio> exercicio;
 
 	public Long getId() {
